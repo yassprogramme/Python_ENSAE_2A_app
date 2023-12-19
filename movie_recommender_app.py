@@ -21,3 +21,26 @@ def recommend(movie):
         recommended_movies.append(movies.iloc[i[0]].title)
         recommended_movies_posters.append(movies_details[movies_details["id"] == movie_id]["poster_path"].values[0])
     return recommended_movies, recommended_movies_posters
+
+app = dash.Dash(__name__)
+app.layout = html.Div(
+    children=[
+        html.Div(
+            html.H1("MOVIE RECOMMENDATION", style={'text-align': 'center', 'font-family': 'Source Sans Pro', 'font-weight': 'bold'}),
+            style={'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}
+        ),
+        dcc.Dropdown(
+            id='movie-dropdown',
+            options=[{'label': title, 'value': title} for title in movies['title']],
+            placeholder='Search...', # Texte affiché par défaut
+            value=""  # Mettez la première valeur par défaut
+        ),
+        html.Button('Recommend', id='recommend-button', n_clicks=0),
+        html.Div(id='output-recommendation')
+    ],
+    style={'backgroundColor': '#00008080'}  # Utilisation du code hexadécimal pour un bleu foncé semi-transparent
+)
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
