@@ -11,7 +11,7 @@ movies_details = pickle.load(open("movies_details.pkl","rb"))
 movies_details = pd.DataFrame(movies_details)
 #movies["poster_path"] = "https://image.tmdb.org/t/p/w500/" + movies_details["poster_path"]
 movies_details["poster_path"]="https://image.tmdb.org/t/p/w500/" + movies_details["poster_path"]
-top_20_popular_movies = movies_details.sort_values('popularity', ascending=False).head(20)
+
 
 genre_options = [genre for genre in movies_details['genres'].explode().unique()]
 
@@ -77,11 +77,18 @@ app.layout = html.Div(
 )
 def update_output(n_clicks, selected_movie_name,selected_genre):
     if not selected_movie_name or selected_movie_name==" ":  # Si aucun film n'est sélectionné
-            # Créer une liste pour stocker les divs des 20 films populaires, 5 par ligne
+                # If no movie is selected, show the top 20 popular movies
+            if not selected_genre:
+                top_20_popular_movies = movies_details.sort_values('popularity', ascending=False).head(20)
+            else:
+                # Filter movies by selected genres
+                filtered_movies = movies_details[movies_details['genres'].apply(lambda x: any(item in x for item in selected_genre))]
+                top_20_popular_movies = filtered_movies.sort_values('popularity', ascending=False).head(20)
+
             popular_movies_divs = []
-            movies_per_row = 5  # Nombre de films par ligne
-            rows_count = len(top_20_popular_movies) // movies_per_row  # Nombre de lignes complètes
-            popular_movies_divs.append(html.H2("The Popular Movies of the Moment"))  # Ajout du titre
+            movies_per_row = 5  # Number of movies per row
+            rows_count = len(top_20_popular_movies) // movies_per_row  # Number of complete rows
+            popular_movies_divs.append(html.H2("The Popular Movies of the Moment"))  # Adding the title    
 
             for row in range(rows_count):
                 start_idx = row * movies_per_row
