@@ -5,6 +5,7 @@ __pycache__/
 *$py.class
 *.pkl
 *.json
+.DS_Store
 
 # C extensions
 *.so
