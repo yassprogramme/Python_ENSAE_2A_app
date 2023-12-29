@@ -4,12 +4,9 @@ from dash.dependencies import Input, Output
 import pickle
 import pandas as pd
 
-#movies_dict = pickle.load(open("movies_dict.pkl", "rb"))
-#movies = pd.DataFrame(movies_dict)
 similarity = pickle.load(open("similarity.pkl", "rb"))
 movies_details = pickle.load(open("movies_details.pkl","rb"))
 movies_details = pd.DataFrame(movies_details)
-#movies["poster_path"] = "https://image.tmdb.org/t/p/w500/" + movies_details["poster_path"]
 movies_details["poster_path"]="https://image.tmdb.org/t/p/w500/" + movies_details["poster_path"]
 
 
