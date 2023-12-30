@@ -30,7 +30,7 @@ Pour cela nous avons travaillé les thématiques suivantes :
 
   `import matplotlib.pyplot as plt`
 
-  `import geopandas as` 
+  `import geopandas as gpd` 
 
   `import contextily as ctx`
 
